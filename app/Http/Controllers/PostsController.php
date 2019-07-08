@@ -26,15 +26,17 @@ class PostsController extends Controller
             'image' => 'image'
         ]);
 
-        $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
-                                                                        //uploads' directory inside storage/app/public a
-                                                                        //and saves the file path
-
-
+        try {
+            $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
+            //uploads' directory inside storage/app/public a
+            //and saves the file path
+        } catch (FatalThrowableError $f) {
+            echo "exception caught";
+        }
         // Get the authenticated user and add his id to the post
         auth()->user()->posts()->create([
-            'text' => $data['text']
-           // 'image' => $imagePath --> add this after an image column is added to the table
+            'text' => $data['text'],
+            'image' => $imagePath //--> add this after an image column is added to the table
         ]);
 
         // redirect - where we should go now? to user's profile
