@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
 {
@@ -28,9 +29,13 @@ class PostsController extends Controller
 
         try {
             $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
-            //uploads' directory inside storage/app/public a
+            //uploads directory inside storage/app/public a
             //and saves the file path
-        } catch (FatalThrowableError $f) {
+
+         //   $image = Image::make(public_path("storage/{$imagePath}"))->fit(450, 450); // wrap & fit the image
+          //  $image->save();
+
+        } catch (Exception $f) {
             echo "exception caught";
         }
         // Get the authenticated user and add his id to the post
@@ -41,5 +46,10 @@ class PostsController extends Controller
 
         // redirect - where we should go now? to user's profile
         return redirect('/profile/' . auth()->user()->id);
+    }
+
+    public function show(\App\Post $post)
+    {
+        return view('posts.show', compact('post'));
     }
 }
