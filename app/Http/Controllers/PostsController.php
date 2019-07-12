@@ -27,22 +27,24 @@ class PostsController extends Controller
             'image' => 'image'
         ]);
 
-        try {
+        if (request('image')) {
             $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
             //uploads directory inside storage/app/public a
             //and saves the file path
 
-         //   $image = Image::make(public_path("storage/{$imagePath}"))->fit(450, 450); // wrap & fit the image
-          //  $image->save();
+            //   $image = Image::make(public_path("storage/{$imagePath}"))->fit(450, 450); // wrap & fit the image
+            //  $image->save();
 
-        } catch (Exception $f) {
-            echo "exception caught";
+            // Get the authenticated user and add his id to the post
+            auth()->user()->posts()->create([
+                'text' => $data['text'],
+                'image' => $imagePath //--> add this after an image column is added to the table
+            ]);
+        } else { // a post with no image
+            auth()->user()->posts()->create([
+                'text' => $data['text']
+            ]);
         }
-        // Get the authenticated user and add his id to the post
-        auth()->user()->posts()->create([
-            'text' => $data['text'],
-            'image' => $imagePath //--> add this after an image column is added to the table
-        ]);
 
         // redirect - where we should go now? to user's profile
         return redirect('/profile/' . auth()->user()->id);

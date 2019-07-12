@@ -28,7 +28,7 @@
                                type="text"
                                class="form-control @error('description') is-invalid @enderror"
                                name="description"
-                               value="{{ old('description') ?? $user->profile->description }}" autocomplete="Description" autofocus>
+                               value="{{ $user->profile->description ?? old('description') }}" autocomplete="Description" autofocus>
 
                         @error('text')
                         <strong>{{ $message }}</strong>

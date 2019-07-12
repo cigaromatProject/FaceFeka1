@@ -4,11 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-            <img src="https://www.afeka.ac.il/media/8703/051006096.jpg?width=153&height=153&mode=crop" class="rounded-circle">
-
+            <img src="{{ $user->profile->profileImage() }}" class="rounded-circle w-100">
         </div>
         <div class="col-9 pt-5">
-            <div class="d-flex justify-content-between align-items-baseline"><h1>{{$user->name}}</h1>
+            <div class="d-flex justify-content-between align-items-baseline">
+                <div class="d-flex align-items-center pb-3">
+                    <h1>{{$user->name}}</h1>
+                    <follow-button user-id="{{ $user->id }}"></follow-button>
+                </div>
                 @can('update', $user->profile)
                     <a href="/p/create">Add New Post</a>
                 @endcan
@@ -19,12 +22,12 @@
             @endcan
 
             <div class="d-flex">
-            <div class="pr-5"><strong>258</strong> friends</div>
-            <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> photos</div>
+            <div class="pr-5"><strong>258</strong> followers</div>
+            <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
             </div>
             <div class="pt-4 font-weight-bold">{{$user->profile->title}}</div>
             <div>{{$user->profile->description}}</div>
-            <div><a href="https://portal.afeka.ac.il">{{$user->profile->url}}</a></div>
+            <div><a href=" {{ $user->profile->url }}">{{$user->profile->url}}</a></div>
         </div>
     </div>
 

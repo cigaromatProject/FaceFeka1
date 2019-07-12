@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Order of the routes matters
+
+Route::post('follow/{user}', 'FollowsController@store');
+
 Route::get('/p/create', 'PostsController@create'); // call create() method inside PostsController when that URL is chosen
 Route::get('/p/{post}', 'PostsController@show');
 Route::post('/p', 'PostsController@store'); // call store() method inside PostsController when that URL is chosen

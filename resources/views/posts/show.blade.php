@@ -5,10 +5,23 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <img src="/storage/{{ $post->image }}" class="w-300">
+            <img src="/storage/{{ $post->image }}" class="w-100">
         </div>
         <div class="col-4">
-            <h3>{{ $post->text }}</h3>
+            <div class="d-flex align-items-center">
+                <div class="pr-3">
+                    <img src="{{ $post->user->profile->profileImage() }}" class="rounded-circle w-40" style="max-width: 40px;">
+                </div>
+                <div>
+                    <div class="font-weight-bold"><a href="/profile/{{ $post->user->id }}"><span class="text-dark">{{ $post->user->name }}</span></a>
+                    <a href="#" class="pl-3">Follow</a>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <p>{{ $post->text }}</p>
         </div>
     </div>
 </div>
