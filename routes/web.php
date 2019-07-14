@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
@@ -21,6 +19,11 @@ Auth::routes();
 
 Route::post('/follow/{user}', 'FollowsController@store');
 
+Route::get('/email', function() {
+    return new NewUserWelcomeMail();
+});
+
+Route::get('/', 'PostsController@index');
 Route::get('/p/create', 'PostsController@create'); // call create() method inside PostsController when that URL is chosen
 Route::get('/p/{post}', 'PostsController@show');
 Route::post('/p', 'PostsController@store'); // call store() method inside PostsController when that URL is chosen

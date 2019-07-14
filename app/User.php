@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Mail\NewUserWelcomeMail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -46,7 +48,9 @@ class User extends Authenticatable
             $user->profile()->create([
                 'title' => $user->name,
             ]); // create a new profile for each new user (as an event)
+            Mail::to($user->email)->send(new NewUserWelcomeMail());
         });
+
     }
 
     public function posts()
