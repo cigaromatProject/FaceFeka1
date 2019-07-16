@@ -35,6 +35,17 @@
 
         </div>
 
+        <div class="row">
+            <label for="image" class="col-md-4 col-form-label">Post 2nd Image</label>
+            <input type="file" class="form-control-file" id="image2" name="image2">
+
+            @error('image2')
+            <strong>{{ $message }}</strong>
+            @enderror
+
+
+        </div>
+
         <div class="row pt-4">
             <select name="ispublic" id="ispublic">
                 <option value="Public" input value='1'>Public</option>

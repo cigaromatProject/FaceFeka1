@@ -7,6 +7,11 @@
         <div class="col-8">
             <img src="/storage/{{ $post->image }}" class="w-100">
         </div>
+        @if($post->image2)
+        <div class="col-8">
+            <img src="/storage/{{ $post->image2 }}" class="w-100">
+        </div>
+        @endif
         <div class="col-4">
             <div class="d-flex align-items-center">
                 <div class="pr-3">

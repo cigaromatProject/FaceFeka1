@@ -40,6 +40,7 @@
             <div class="col-4 pb-4">
                 <a href="/p/{{ $post->id }}">
                     <img src="/storage/{{ $post->image }}" class="w-100">
+                    <img src="/storage/{{ $post->image2 }}" class="w-100">
                 </a>
                 <i>{{ $post->text }}</i>
             </div>

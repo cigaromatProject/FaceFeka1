@@ -23,8 +23,12 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand d-flex" href="{{ url('/') }}">
+            @if(Auth::user())
+            <a href="http://localhost:8000/profile/ {{ Auth::user()->id }} ">
                 <div><img src="svg/logo1.png" style="height: 25px" class="pr-3"></div>
+            </a>
+            @endif
+            <a class="navbar-brand d-flex" href="{{ url('/') }}">
                 <div class="pl-2 pb-0">FaceFEKA</div>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

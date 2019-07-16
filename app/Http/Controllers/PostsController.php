@@ -37,21 +37,32 @@ class PostsController extends Controller
                 $postVisability = 0;
         }
 
-        if (request('image')) {
+        if (request('image') && request('image2')) {
             $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
             //uploads directory inside storage/app/public a
             //and saves the file path
-
-            //   $image = Image::make(public_path("storage/{$imagePath}"))->fit(450, 450); // wrap & fit the image
-            //  $image->save();
-
-            // Get the authenticated user and add his id to the post
+            $imagePath2 = request('image2')->store('uploads', 'public');
+            // Get the authenticated user and add his id to the post and create a new post
             auth()->user()->posts()->create([
                 'text' => $data['text'],
-                'image' => $imagePath, //--> add this after an image column is added to the table
-
+                'image' => $imagePath, // saves the image path in DB
+                'image2' => $imagePath2,
                 'ispublic' => $postVisability
             ]);
+        } else if (request('image2')) {
+            $imagePath = request('image2')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
+            auth()->user()->posts()->create([
+                'text' => $data['text'],
+                'image2' => $imagePath, // saves the image path in DB
+                'ispublic' => $postVisability
+            ]);
+        } else if (request('image1')) {
+            $imagePath = request('image')->store('uploads', 'public');
+            auth()->user()->posts()->create([
+                'text' => $data['text'],
+                'image' => $imagePath, // saves the image path in DB
+                'ispublic' => $postVisability
+                ]);
         } else { // a post with no image
             auth()->user()->posts()->create([
                 'text' => $data['text'],
