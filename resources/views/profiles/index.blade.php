@@ -1,6 +1,8 @@
+
 @extends('layouts.app')
 
 @section('content')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
@@ -34,12 +36,14 @@
 
     <div class="row pt-5">
         @foreach($user->posts as $post)
+            @if ($post->ispublic == 1 || Auth::user()->id == $user->id)
             <div class="col-4 pb-4">
                 <a href="/p/{{ $post->id }}">
                     <img src="/storage/{{ $post->image }}" class="w-100">
                 </a>
                 <i>{{ $post->text }}</i>
             </div>
+            @endif
         </div>
     @endforeach
     </div>

@@ -8,6 +8,7 @@ class Post extends Model
 {
     protected $guarded = []; // don't guard anything
 
+
     public function user()
     {
         return $this->belongsTo(User::class);

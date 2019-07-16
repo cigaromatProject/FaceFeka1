@@ -25,8 +25,17 @@ class PostsController extends Controller
         $data = request()->validate([
             'text' => 'required',
             // images are not a required field
-            'image' => 'image'
+            'image' => 'image',
+            'ispublic' => 'required'
         ]);
+
+        switch ($data['ispublic']) {
+            case 'Public':
+                $postVisability = 1;
+                break;
+            case 'Private':
+                $postVisability = 0;
+        }
 
         if (request('image')) {
             $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
@@ -39,11 +48,14 @@ class PostsController extends Controller
             // Get the authenticated user and add his id to the post
             auth()->user()->posts()->create([
                 'text' => $data['text'],
-                'image' => $imagePath //--> add this after an image column is added to the table
+                'image' => $imagePath, //--> add this after an image column is added to the table
+
+                'ispublic' => $postVisability
             ]);
         } else { // a post with no image
             auth()->user()->posts()->create([
-                'text' => $data['text']
+                'text' => $data['text'],
+                'ispublic' => $postVisability
             ]);
         }
 

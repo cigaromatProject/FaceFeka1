@@ -36,6 +36,13 @@
         </div>
 
         <div class="row pt-4">
+            <select name="ispublic" id="ispublic">
+                <option value="Public" input value='1'>Public</option>
+                <option value="Private" input value='0'>Private</option>
+            </select>
+        </div>
+
+        <div class="row pt-4">
             <button class="btn btn-primary">Post</button>
         </div>
 
