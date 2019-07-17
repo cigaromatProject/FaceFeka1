@@ -30,7 +30,11 @@
             </div>
             <div class="pt-4 font-weight-bold">{{$user->profile->title}}</div>
             <div>{{$user->profile->description}}</div>
-            <div><a href=" {{ $user->profile->url }}">{{$user->profile->url}}</a></div>
+            @if (Auth::user()->id == $user->id)
+            <div class="pt-2" onclick="openInNewTab('http://localhost:7000');">
+                <button class="btn btn-primary" rel="noopener noreferrer" >Go to Bumping Cars</button>
+            </div>
+            @endif
         </div>
     </div>
 
@@ -39,8 +43,12 @@
             @if ($post->ispublic == 1 || Auth::user()->id == $user->id)
             <div class="col-4 pb-4">
                 <a href="/p/{{ $post->id }}">
+                    @if ($post->image != null)
                     <img src="/storage/{{ $post->image }}" class="w-100">
+                    @endif
+                    @if ($post->image2 != null)
                     <img src="/storage/{{ $post->image2 }}" class="w-100">
+                    @endif
                 </a>
                 <i>{{ $post->text }}</i>
             </div>
@@ -50,4 +58,11 @@
     </div>
 
 </div>
+<script>
+    function openInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+</script>
+
 @endsection

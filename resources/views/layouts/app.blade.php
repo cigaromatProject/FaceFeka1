@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <title>FaceFEKA</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'FaceFEKA') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,7 +30,7 @@
         <div class="container">
             @if(Auth::user())
             <a href="http://localhost:8000/profile/ {{ Auth::user()->id }} ">
-                <div><img src="svg/logo1.png" style="height: 25px" class="pr-3"></div>
+                <div><img src="{{ URL::to('/') }}/svg/images/logo1_converted.svg" style="height: 25px" class="pr-3"></div>
             </a>
             @endif
             <a class="navbar-brand d-flex" href="{{ url('/') }}">
@@ -73,6 +78,9 @@
                         </li>
                     @endguest
                 </ul>
+                <div>
+                    <input type="text" id="search" name="search" class="form-control" placeholder="Search for people...">
+                </div>
             </div>
         </div>
     </nav>
@@ -81,5 +89,32 @@
         @yield('content')
     </main>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $( "#search" ).autocomplete({
+
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{url('/fetch')}}",
+                    data: {
+                        term : request.term
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        var resp = $.map(data,function(obj){
+                            //console.log(obj.city_name);
+                            return obj.name;
+                        });
+
+                        response(resp);
+                    }
+                });
+            },
+            minLength: 1
+        });
+    });
+
+</script>
 </body>
 </html>

@@ -39,9 +39,12 @@ class PostsController extends Controller
 
         if (request('image') && request('image2')) {
             $imagePath = request('image')->store('uploads', 'public'); // Specifies where the uploaded file would be saved - '
-            //uploads directory inside storage/app/public a
-            //and saves the file path
+            //uploads directory inside storage/app/public and saves the file path
             $imagePath2 = request('image2')->store('uploads', 'public');
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200,1200);
+            $image->save();
+
             // Get the authenticated user and add his id to the post and create a new post
             auth()->user()->posts()->create([
                 'text' => $data['text'],
@@ -56,7 +59,7 @@ class PostsController extends Controller
                 'image2' => $imagePath, // saves the image path in DB
                 'ispublic' => $postVisability
             ]);
-        } else if (request('image1')) {
+        } else if (request('image')) {
             $imagePath = request('image')->store('uploads', 'public');
             auth()->user()->posts()->create([
                 'text' => $data['text'],

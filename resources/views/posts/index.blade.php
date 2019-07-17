@@ -6,9 +6,11 @@
         @foreach($posts as $post)
             @if ($post->ispublic == 1)
         <div class="row pt-2 pb-4">
-            <div class="col-6 offset-3">
-                <img src="/storage/{{ $post->image }}" class="w-100">
-            </div>
+                @if ($post->image != null)
+                <div class="col-6 offset-3">
+                    <img src="/storage/{{ $post->image }}" class="w-100">
+                </div>
+                @endif
         </div>
         <div class="row">
 

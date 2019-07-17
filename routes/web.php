@@ -23,13 +23,9 @@ Route::get('/email', function() {
     return new NewUserWelcomeMail();
 });
 
-Route::get('/', 'LiveSearch@index');
-Route::post('/fetch', 'LiveSearch@fetch')->name('LiveSearch.fetch');
-
 Route::get('/', 'PostsController@index');
 Route::get('/p/create', 'PostsController@create'); // call create() method inside PostsController when that URL is chosen
 Route::get('/p/{post}', 'PostsController@show');
-Route::get('image-view', 'ImageController@index');
 Route::post('/p', 'PostsController@store'); // call store() method inside PostsController when that URL is chosen
 
 
