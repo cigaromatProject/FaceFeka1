@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>FaceFEKA</title>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -29,9 +30,9 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             @if(Auth::user())
-            <a href="http://localhost:8000/profile/ {{ Auth::user()->id }} ">
-                <div><img src="{{ URL::to('/') }}/svg/images/logo1_converted.svg" style="height: 25px" class="pr-3"></div>
-            </a>
+                <a href="http://localhost:8000/profile/ {{ Auth::user()->id }} ">
+                    <div><img src="{{ URL::to('/') }}/svg/images/logo1_converted.svg" style="height: 25px" class="pr-3"></div>
+                </a>
             @endif
             <a class="navbar-brand d-flex" href="{{ url('/') }}">
                 <div class="pl-2 pb-0">FaceFEKA</div>
@@ -79,7 +80,10 @@
                     @endguest
                 </ul>
                 <div>
-                    <input type="text" id="search" name="search" class="form-control" placeholder="Search for people...">
+                    <form method="get" action="{{url('search')}}">
+                    <input type="text" id='search' name="q" autocomplete="off" class="form-control" placeholder="Search for people...">
+                    <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -92,29 +96,38 @@
 
 <script>
     $(document).ready(function() {
-        $( "#search" ).autocomplete({
+        var timer = null;
+        $("#search").on("keyup",function(){
+            clearTimeout(timer);
+            if($(this).val() == ''){
+                $('.search_results').hide();
+            }else{
+                timer = setTimeout(getSearch, 250)
+            }
 
-            source: function(request, response) {
-                $.ajax({
-                    url: "{{url('/fetch')}}",
-                    data: {
-                        term : request.term
-                    },
-                    dataType: "json",
-                    success: function(data){
-                        var resp = $.map(data,function(obj){
-                            //console.log(obj.city_name);
-                            return obj.name;
-                        });
-
-                        response(resp);
-                    }
-                });
-            },
-            minLength: 1
         });
-    });
 
+        function getSearch() {
+            var url = "{{url('/')}}";
+            var value = $('#search').val();
+            $.ajax({
+                type: 'get',
+                url: url+'/getSearch/'+value,
+                async: false,
+
+                success: function (data) {
+                    if(data){
+                        $('.search_results').show();
+                        $('.search_results ul').html(data);
+                    }else{
+                        $('.search_results').hide();
+
+                    }
+                }
+            })
+        }
+    })
 </script>
 </body>
 </html>
+
