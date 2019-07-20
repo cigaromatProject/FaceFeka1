@@ -2,21 +2,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FaceFEKA') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,6 +16,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!--My Style * CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" />
+
+    <!-- Bootstrap release 4.3.1 * CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/4.3.1/css/bootstrap.min.css') }}" />
+
+    <!-- Fontawesome release 5.8.1 * CSS -->
+    <link rel="stylesheet" href="{{ asset('fontawesome/5.8.1/css/all.css') }}" />
 </head>
 <body>
 <div id="app">
@@ -79,11 +79,19 @@
                         </li>
                     @endguest
                 </ul>
-                <div>
+                <div class="wrap">
+                <div class="search">
                     <form method="get" action="{{url('search')}}">
-                    <input type="text" id='search' name="q" autocomplete="off" class="form-control" placeholder="Search for people...">
+                    <input type="text" id='search' name="q" autocomplete="off" class="searchTerm" placeholder="Search for people...">
                     <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
                     </form>
+                </div>
+                    <div class="search_results" style="display: none;">
+                        <ul id="ajax_result">
+
+
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,7 +102,9 @@
     </main>
 </div>
 
-<script>
+    <script src="{{asset('js/app.js')}}"></script>
+
+    <script>
     $(document).ready(function() {
         var timer = null;
         $("#search").on("keyup",function(){
@@ -104,7 +114,6 @@
             }else{
                 timer = setTimeout(getSearch, 250)
             }
-
         });
 
         function getSearch() {
@@ -128,6 +137,7 @@
         }
     })
 </script>
+
 </body>
 </html>
 

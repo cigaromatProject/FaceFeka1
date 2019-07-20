@@ -2,34 +2,32 @@
 
 @section('content')
     <div class="container">
-        <form action="/profile/{{ $user->id }}" enctype="multipart/form-data" method="post">
+        <form action="/p/{{ $user->id }}" enctype="multipart/form-data" method="post">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col-8 off-2">
                     <div class="row">
-                        <h1>Edit Profile</h1>
+                        <h1>Edit Post</h1>
                     </div>
                     <div class="form-group row">
-                        <label for="title" class="col-md-4 col-form-label">Text</label>
-                        <input id="title"
+                        <label for="text" class="col-md-4 col-form-label">Title</label>
+                        <input id="text"
                                type="text"
                                class="form-control @error('title') is-invalid @enderror"
-                               name="title"
-                               value="{{ old('title') ?? $user->profile->title }}" autocomplete="title" autofocus>
+                               name="text"
+                               value="{{ old('text') ?? $user->profile->title }}" autocomplete="text" autofocus>
 
                         @error('text')
                         <strong>{{ $message }}</strong>
                         @enderror
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label">Description</label>
-                        <input id="description"
-                               type="text"
-                               class="form-control @error('description') is-invalid @enderror"
-                               name="description"
-                               value="{{ $user->profile->description ?? old('description') }}" autocomplete="Description" autofocus>
-
+                        <label for="ispublic" class="col-md-4 col-form-label">Publicity</label>
+                        <select name="ispublic" id="ispublic">
+                            <option value="Public" input value='1'>Public</option>
+                            <option value="Private" input value='0'>Private</option>
+                        </select>
                         @error('text')
                         <strong>{{ $message }}</strong>
                         @enderror
@@ -40,7 +38,7 @@
 
 
             <div class="row">
-                <label for="image" class="col-md-4 col-form-label">Upload Profile Image</label>
+                <label for="image" class="col-md-4 col-form-label">Update Post Image</label>
                 <input type="file" class="form-control-file" id="image" name="image">
 
                 @error('image')
@@ -51,7 +49,7 @@
             </div>
 
             <div class="row pt-4">
-                <button class="btn btn-primary">Save Profile</button>
+                <button class="btn btn-primary">Save Post</button>
             </div>
 
         </form>

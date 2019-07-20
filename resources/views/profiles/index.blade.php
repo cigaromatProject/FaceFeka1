@@ -43,14 +43,14 @@
             @if ($post->ispublic == 1 || Auth::user()->id == $user->id)
             <div class="col-4 pb-4">
                 <a href="/p/{{ $post->id }}">
-                    @if ($post->image != null)
+                    @if ($post->image)
                     <img src="/storage/{{ $post->image }}" class="w-100">
                     @endif
-                    @if ($post->image2 != null)
+                    @if ($post->image2)
                     <img src="/storage/{{ $post->image2 }}" class="w-100">
                     @endif
+                        <i>{{ $post->text }}</i>
                 </a>
-                <i>{{ $post->text }}</i>
             </div>
             @endif
         </div>
