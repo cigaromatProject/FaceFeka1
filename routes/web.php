@@ -25,11 +25,11 @@ Route::get('/email', function() {
 
 Route::get('/', 'PostsController@index');
 Route::get('/p/create', 'PostsController@create'); // call create() method inside PostsController when that URL is chosen
-Route::get('/p/{post}', 'PostsController@show');
+Route::get('/p/{post}', 'PostsController@show')->name('posts.show');
 // due to commentsController
 Route::get('/p/{post}/edit', 'PostsController@edit')->name('posts.edit');
 Route::post('/p', 'PostsController@store'); // call store() method inside PostsController when that URL is chosen
-//Route::put('/p/{post}/t', 'PostsController@toggle')->name('posts.toggle');
+
 
 Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
 Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
@@ -38,6 +38,7 @@ Route::put('/profile/{user}', 'ProfilesController@update')->name('profile.update
 Route::get('/getSearch/{value}','SearchController@searchAjax'); //search
 Route::get('/search','SearchController@search'); //search
 
-//Autocopletesearch
-Route::get('autocomplete', 'AutoCompleteController@search');
+// add all resources of comments
+Route::post('/comments', 'CommentsController@store');
+Route::resource('comments', 'CommentsController');
 

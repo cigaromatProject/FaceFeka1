@@ -2,7 +2,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    var playerName = '{{ $user->name }}';
+
+</script>
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
@@ -31,8 +34,8 @@
             <div class="pt-4 font-weight-bold">{{$user->profile->title}}</div>
             <div>{{$user->profile->description}}</div>
             @if (Auth::user()->id == $user->id)
-            <div class="pt-2" onclick="openInNewTab('http://localhost:7000');">
-                <button class="btn btn-primary" rel="noopener noreferrer" >Go to Bumping Cars</button>
+            <div class="pt-2">
+                <button id="gameLauncher" onClick="playFlappy('http://localhost:5000', playerName)" class="btn btn-primary" rel="noopener noreferrer" >Play Flappy Bird</button>
             </div>
             @endif
         </div>
@@ -59,10 +62,14 @@
 
 </div>
 <script>
-    function openInNewTab(url) {
-        var win = window.open(url, '_blank');
-        win.focus();
+    function playFlappy(url, playerName) {
+        var win = window.open(url, "_blank");
+        win.playerName = playerName;
+        localStorage.setItem("name", playerName);
+        console.log("saved in localStorage: " + localStorage.getItem("name"));
     }
+
+
 </script>
 
 @endsection

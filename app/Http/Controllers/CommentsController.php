@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Http\Requests\CommentRequest;
+use App\Post;
+use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
+
 
 class CommentsController extends Controller
 {
@@ -44,7 +48,7 @@ class CommentsController extends Controller
 
         Comment::create([
             'body' => $request->body,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->user()->id,
             'post_id' => $post->id
         ]);
         return redirect()->route('posts.show', $post->id);

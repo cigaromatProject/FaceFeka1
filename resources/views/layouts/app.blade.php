@@ -19,11 +19,6 @@
     <!--My Style * CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" />
 
-    <!-- Bootstrap release 4.3.1 * CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/4.3.1/css/bootstrap.min.css') }}" />
-
-    <!-- Fontawesome release 5.8.1 * CSS -->
-    <link rel="stylesheet" href="{{ asset('fontawesome/5.8.1/css/all.css') }}" />
 </head>
 <body>
 <div id="app">
@@ -111,7 +106,7 @@
             clearTimeout(timer);
             if($(this).val() == ''){
                 $('.search_results').hide();
-            }else{
+            } else{
                 timer = setTimeout(getSearch, 250)
             }
         });
@@ -119,6 +114,10 @@
         function getSearch() {
             var url = "{{url('/')}}";
             var value = $('#search').val();
+            if (value == '*') {
+                value = '%';
+                console.log(value);
+            }
             $.ajax({
                 type: 'get',
                 url: url+'/getSearch/'+value,

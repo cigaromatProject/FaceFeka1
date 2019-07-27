@@ -22,7 +22,9 @@
                 </div>
                 <div>
                     <div class="font-weight-bold"><a href="/profile/{{ $post->user->id }}"><span class="text-dark">{{ $post->user->name }}</span></a>
-                    <a href="#" class="pl-3">Follow</a>
+                    @if(!$post->user->profile->followers->contains(Auth::user()))
+                        <a href="#" class="pl-3">Follow</a>
+                    @endif
                     </div>
                 </div>
             </div>
@@ -43,23 +45,22 @@
 
     </div>
     <div class="row-4 pt-3">
-    <h3>Comments</h3>
-
-    </div>
+        <h3>Comments</h3>
+        @if (Auth::check())
+            {{ Form::open(['route' => ['comments.store'], 'method' => 'POST']) }}
+            <p>{{ Form::textarea('body', old('body')) }}</p>
+            {{ Form::hidden('post_id', $post->id) }}
+            <p>{{ Form::submit('Send') }}</p>
+            {{ Form::close() }}
+        @endif
+        @forelse ($post->comments as $comment)
+            <p>{{ $comment->user->name }} {{$comment->created_at}}</p>
+            <p>{{ $comment->body }}</p>
+            <hr>
+        @empty
+            <p>This post has no comments</p>
+        @endforelse
 </div>
 @endsection
-
-<script>
-    $(".button").click(function() {
-        console.log("inside ajax");
-        $.ajax({
-            type: "PUT",
-            url: '/p/{post}',
-            data: {ispublic: 1}
-        }).done(function(msg) {
-            alert("Data saved " + msg);
-        });
-    });
-</script>
 
 
